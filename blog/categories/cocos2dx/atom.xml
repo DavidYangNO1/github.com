@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: cocos2dx | I'm DavidYang]]></title>
+  <link href="www.davidyanggo.me/blog/categories/cocos2dx/atom.xml" rel="self"/>
+  <link href="www.davidyanggo.me/"/>
+  <updated>2015-04-05T14:33:37+08:00</updated>
+  <id>www.davidyanggo.me/</id>
+  <author>
+    <name><![CDATA[David Yang]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[cocos2dx中文显示]]></title>
+    <link href="www.davidyanggo.me/blog/2014/04/13/cocos2dxzhong-wen-xian-shi/"/>
+    <updated>2014-04-13T17:22:08+08:00</updated>
+    <id>www.davidyanggo.me/blog/2014/04/13/cocos2dxzhong-wen-xian-shi</id>
+    <content type="html"><![CDATA[<p>cocos2dx 里面的label 对中文显示的支持不是很友好，在windows 环境下，会出现乱码，这主要是编码的问题。
+中文支持主要还是还是使用UTF8。 因此解决的方法就是转换成UTF8 .
+方法如下： <!--more--></p>
+
+<p>1）方法1：如果考虑做过多语言发布app的，就知道本地话问题。一般都是通过读取语言文件，因此可以通过读取UTF8格式的文件，把UI显示的内容保存到文件里面
+这是一种解决方法</p>
+
+<p>2）方法2：就是转换窄字符，宽字符</p>
+
+<p>``` c++
+class  WStrToUTF8
+{
+public:</p>
+
+<pre><code> static std::string StrToUTF8(const string&amp; src)
+ {
+      std::string curLocale=setlocale(LC_ALL,NULL);
+      setlocale(LC_ALL, "");
+      int len=src.length()+1;
+      wchar_t *str =new wchar_t[len];
+      int total=mbstowcs(str,src.c_str(),len);
+      str[total]=0;
+      std::wstring wstr=str;
+      delete[] str;
+      setlocale(LC_ALL, curLocale.c_str());
+      return WStrToUTF8(wstr);
+ }
+
+ static std::string WStrToUTF8( const wstring&amp; src)
+ {
+
+      std::string dest;
+      for (size_t i = 0; i &lt; src.size(); i++){
+           wchar_t w = src[i];
+           if (w &lt;= 0x7f)
+                dest.push_back((char)w);
+           else if (w &lt;= 0x7ff){
+                dest.push_back(0xc0 | ((w &gt;&gt; 6)&amp; 0x1f));
+                dest.push_back(0x80| (w &amp; 0x3f));
+           }
+           else if (w &lt;= 0xffff){
+                dest.push_back(0xe0 | ((w &gt;&gt; 12)&amp; 0x0f));
+                dest.push_back(0x80| ((w &gt;&gt; 6) &amp; 0x3f));
+                dest.push_back(0x80| (w &amp; 0x3f));
+           }
+           else
+                dest.push_back('?');
+      }
+      return dest;
+ }
+</code></pre>
+
+<p>};
+```</p>
+
+<p>Demo 如下：</p>
+
+<p>``` c++
+LabelTTF::create(WStrToUTF8::StrToUTF8(&ldquo;大闹天宫3！&rdquo;), &ldquo;Arial&rdquo;, 12);</p>
+
+<p>LabelTTF::create(WStrToUTF8::WStrToUTF8(&ldquo;大闹天宫&rdquo;), &ldquo;Arial&rdquo;, 12);
+```</p>
+]]></content>
+  </entry>
+  
+</feed>
