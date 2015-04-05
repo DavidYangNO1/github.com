@@ -3,35 +3,18 @@ layout: default
 ---
 
 {% assign index = true %}
-{% assign is_first_post = true %}
-
+<div itemscope itemtype="http://schema.org/Blog">
 {% for post in paginator.posts %}
-  {% assign content = post.content %}
-    <article class="post">
-      {% include article.html %}
-    </article>
+{% assign content = post.content %}
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">{% include article.html %}</article>
 {% endfor %}
-
-<nav class="pagination" role="pagination">
-  {% if paginator.previous_page %}
-    {% assign url = site.paginate_directory | append:'/' | append:paginator.previous_page %}
-
-    {% if paginator.previous_page == 1 %}
-      {% assign url = "/" %}
+</div>
+<nav id="pagenavi">
+    {% if paginator.previous_page %}
+        <a href="{{paginator.previous_page}}" class="prev">Prev</a>
     {% endif %}
-
-    <a class="newer-posts" href="{{ url }}"> ← Newer Posts </a>
-  {% endif %}
-
-  <span class="page-number">
-    Page {{ paginator.page }} of {{ paginator.total_pages }}
-  </span>
-
-  {% if paginator.next_page %}
-    <a class="older-posts"
-        href="{{ site.paginate_directory }}/{{ paginator.next_page }}">
-      Older Posts →
-    </a>
-  {% endif %}
+    {% if paginator.next_page %}
+        <a href="{{paginator.next_page}}" class="next">Next</a>
+    {% endif %}
+    <div class="center"><a href="{{ root_url }}/blog/archives">Blog Archives</a></div>
 </nav>
-
