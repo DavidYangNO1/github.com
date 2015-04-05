@@ -1,5 +1,5 @@
 .CodeRay {
-  font-family: Menlo, Monaco, Courier New;
+  font-family: $code-font;
   @include font-rem(0.75);
   color: #d0d0d0;
   margin-bottom: 1.5em;
