@@ -1,8 +1,23 @@
 ---
-layout: default
-title: Blog Archives
+layout: page
+title: Blog Archive
+footer: false
 ---
-
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#nav-menu .archives-nav").addClass("current");
+	$("#nav-menu .index-nav").removeClass("current");
+});
+</script>
+<div id="archives">
 {% for post in site.posts reverse %}
-	{% include archive_post.html %}
+{% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+{% unless year == this_year %}
+  {% assign year = this_year %}
+  <div class="al_year">{{ year }}</div>
+{% endunless %}
+<div class="archives-post clearfix">
+  {% include archive_post.html %}
+</div>
 {% endfor %}
+</div>
