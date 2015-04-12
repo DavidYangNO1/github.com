@@ -4,6 +4,3 @@
 [submodule ".themes/classic-martinb"]
 	path = .themes/classic-martinb
 	url = git://github.com/fapper/classic-martinb.git
-[submodule ".themes/hpstr"]
-	path = .themes/hpstr
-	url = https://github.com/jez/hpstr-theme.git
