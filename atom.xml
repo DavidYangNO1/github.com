@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[I'm DavidYang]]></title>
-  <link href="www.davidyanggo.me/atom.xml" rel="self"/>
-  <link href="www.davidyanggo.me/"/>
-  <updated>2015-04-22T00:39:15+08:00</updated>
-  <id>www.davidyanggo.me/</id>
+  <link href="http://www.davidyanggo.me/atom.xml" rel="self"/>
+  <link href="http://www.davidyanggo.me/"/>
+  <updated>2015-04-22T01:06:12+08:00</updated>
+  <id>http://www.davidyanggo.me/</id>
   <author>
     <name><![CDATA[David Yang]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[ComponentKit 最佳实践，注意细节]]></title>
-    <link href="www.davidyanggo.me/blog/2015/04/02/componentkit-zui-jia-shi-jian-%2Czhu-yi-xi-jie/"/>
+    <link href="http://www.davidyanggo.me/blog/2015/04/02/componentkit-zui-jia-shi-jian-%2Czhu-yi-xi-jie/"/>
     <updated>2015-04-02T21:54:23+08:00</updated>
-    <id>www.davidyanggo.me/blog/2015/04/02/componentkit-zui-jia-shi-jian-,zhu-yi-xi-jie</id>
+    <id>http://www.davidyanggo.me/blog/2015/04/02/componentkit-zui-jia-shi-jian-,zhu-yi-xi-jie</id>
     <content type="html"><![CDATA[<p>ComponentKit  最佳实践,开发中需要注意的地方</p>
 
 <!--more-->
@@ -241,9 +241,9 @@
   
   <entry>
     <title type="html"><![CDATA[ComponentKit 优势与劣势]]></title>
-    <link href="www.davidyanggo.me/blog/2015/04/02/componentkit-you-shi-yu-lie-shi/"/>
+    <link href="http://www.davidyanggo.me/blog/2015/04/02/componentkit-you-shi-yu-lie-shi/"/>
     <updated>2015-04-02T21:49:41+08:00</updated>
-    <id>www.davidyanggo.me/blog/2015/04/02/componentkit-you-shi-yu-lie-shi</id>
+    <id>http://www.davidyanggo.me/blog/2015/04/02/componentkit-you-shi-yu-lie-shi</id>
     <content type="html"><![CDATA[<p>ComponentKit 突出的地方是在复杂的列表视图，在Facebook的News Feed IOS版本app得到了很好的体现</p>
 
 <!--more-->
@@ -269,9 +269,9 @@
   
   <entry>
     <title type="html"><![CDATA[移动端视频外挂字幕解决方案]]></title>
-    <link href="www.davidyanggo.me/blog/2014/04/13/yi-dong-duan-shi-pin-wai-gua-zi-mu-jie-jue-fang-an/"/>
+    <link href="http://www.davidyanggo.me/blog/2014/04/13/yi-dong-duan-shi-pin-wai-gua-zi-mu-jie-jue-fang-an/"/>
     <updated>2014-04-13T23:21:52+08:00</updated>
-    <id>www.davidyanggo.me/blog/2014/04/13/yi-dong-duan-shi-pin-wai-gua-zi-mu-jie-jue-fang-an</id>
+    <id>http://www.davidyanggo.me/blog/2014/04/13/yi-dong-duan-shi-pin-wai-gua-zi-mu-jie-jue-fang-an</id>
     <content type="html"><![CDATA[<p>webvtt字幕文件已经很好的支持跨平台，特别是 html5的支持。 ios 6以后在这方面也已经无缝集成，底层做字幕渲染支持。</p>
 
 <!--more-->
@@ -283,7 +283,7 @@
 
 <p>1） 首先是说下在ios系统下字幕文件与视频播放文件的流程。 直接看流程图</p>
 
-<p><img src="www.davidyanggo.me/images/vtt_1.png"></p>
+<p><img src="http://www.davidyanggo.me/images/vtt_1.png"></p>
 
 <p>m3u8文件是为了多码率的适配而提出的，为了支持外挂字体，需要整合vtt与m3u8文件。整个合并步骤流程图如上，下面说下具体的步骤
 2） 创建webvtt 外挂字幕（字幕拓展名为.vtt）</p>
@@ -291,17 +291,17 @@
 <p>.vtt 文件可以像.ts文件一样，利用mediasubtitlesegmenter工具
 拆成片段，每一个片段都是一个小的.vtt字幕文件，.vtt文件内容以及拆分的片段文件列表如下截图：</p>
 
-<p><img src="www.davidyanggo.me/images/vtt_2.png"></p>
+<p><img src="http://www.davidyanggo.me/images/vtt_2.png"></p>
 
 <p>上面是具体的.vtt 文件内容， 有起始时间，结束时间，显示相对位置</p>
 
-<p><img src="www.davidyanggo.me/images/vtt_3.png"></p>
+<p><img src="http://www.davidyanggo.me/images/vtt_3.png"></p>
 
 <p>3)建立一个.m3u8 字幕播放列表文件.</p>
 
 <p>把上面拆分的字幕文件.vtt 的链接地址url放到.m3u8字幕播放列表文件里面，字幕url地址可以是绝对路径或者相对路径, 具体的内容如下截图：</p>
 
-<p><img src="www.davidyanggo.me/images/vtt_4.png"></p>
+<p><img src="http://www.davidyanggo.me/images/vtt_4.png"></p>
 
 <p>上面是字幕文件集合，也就是subtitle.m3u8 的文件内容</p>
 
@@ -309,7 +309,7 @@
 
 <p>主.m3u8文件内容主要包含字幕文件地址与ts文件地址，ts文件与字幕文件主要通过Group-ID,SUBTITLES 属性建立视频内容与文字对应关系，主.m3u8文件具体内容如下截图</p>
 
-<p><img src="www.davidyanggo.me/images/vtt_5.png"></p>
+<p><img src="http://www.davidyanggo.me/images/vtt_5.png"></p>
 
 <p>5)主.m3u8文件解释，主要介绍几个关键的属性</p>
 
@@ -501,9 +501,9 @@
   
   <entry>
     <title type="html"><![CDATA[cocos2dx中文显示]]></title>
-    <link href="www.davidyanggo.me/blog/2014/04/13/cocos2dxzhong-wen-xian-shi/"/>
+    <link href="http://www.davidyanggo.me/blog/2014/04/13/cocos2dxzhong-wen-xian-shi/"/>
     <updated>2014-04-13T17:22:08+08:00</updated>
-    <id>www.davidyanggo.me/blog/2014/04/13/cocos2dxzhong-wen-xian-shi</id>
+    <id>http://www.davidyanggo.me/blog/2014/04/13/cocos2dxzhong-wen-xian-shi</id>
     <content type="html"><![CDATA[<p>cocos2dx 里面的label 对中文显示的支持不是很友好，在windows 环境下，会出现乱码，这主要是编码的问题。
 中文支持主要还是还是使用UTF8。 因此解决的方法就是转换成UTF8 .
 方法如下： <!--more--></p>

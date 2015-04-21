@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: www.davidyanggo.me/sitemap.xml 
+Sitemap: http://www.davidyanggo.me/sitemap.xml 

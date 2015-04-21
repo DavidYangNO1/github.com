@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ios | I'm DavidYang]]></title>
-  <link href="www.davidyanggo.me/blog/categories/ios/atom.xml" rel="self"/>
-  <link href="www.davidyanggo.me/"/>
-  <updated>2015-04-22T00:39:15+08:00</updated>
-  <id>www.davidyanggo.me/</id>
+  <link href="http://www.davidyanggo.me/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://www.davidyanggo.me/"/>
+  <updated>2015-04-22T01:06:12+08:00</updated>
+  <id>http://www.davidyanggo.me/</id>
   <author>
     <name><![CDATA[David Yang]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[移动端视频外挂字幕解决方案]]></title>
-    <link href="www.davidyanggo.me/blog/2014/04/13/yi-dong-duan-shi-pin-wai-gua-zi-mu-jie-jue-fang-an/"/>
+    <link href="http://www.davidyanggo.me/blog/2014/04/13/yi-dong-duan-shi-pin-wai-gua-zi-mu-jie-jue-fang-an/"/>
     <updated>2014-04-13T23:21:52+08:00</updated>
-    <id>www.davidyanggo.me/blog/2014/04/13/yi-dong-duan-shi-pin-wai-gua-zi-mu-jie-jue-fang-an</id>
+    <id>http://www.davidyanggo.me/blog/2014/04/13/yi-dong-duan-shi-pin-wai-gua-zi-mu-jie-jue-fang-an</id>
     <content type="html"><![CDATA[<p>webvtt字幕文件已经很好的支持跨平台，特别是 html5的支持。 ios 6以后在这方面也已经无缝集成，底层做字幕渲染支持。</p>
 
 <!--more-->
