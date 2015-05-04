@@ -3,11 +3,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Blog Archive - I'm DavidYang</title>
+	<title>mvc vs mvvm - I'm DavidYang</title>
     <meta name="author" content="David Yang">
     
-	<meta name="description" content=" 2015 Mvc vs Mvvm May 5 框架 Comments ">
-	
+	<meta name="description" content="mvc ,mvvm, ios, 框架">
+	<meta name="keywords" content="mvc ,mvvm, ios, 框架">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	<link href="/atom.xml" rel="alternate" title="I'm DavidYang" type="application/atom+xml">
@@ -93,144 +93,87 @@
 <div id="toload">
 <!-- begin toload --> 
     <div id="content" class="inner">
-        <article class="page">
-    
-    <h1 class="title">Blog Archive</h1>
-    
-    <div class="entry-content"><div id="blog-archives">
+        <article class="post">
+	<h2 class="title">Mvc vs Mvvm</h2>
+	<div class="entry-content"><p>前段时间，结合公司的项目实际情况，做了MVC vs MVVM的框架比较，技术分享</p>
+
+<!--more-->
 
 
+<p>1）MVC FLow</p>
 
-  
-  <h2>2015</h2>
+<pre><code>1:MVC是最初的UI设计模式，1970年的时候就出现了，最早出现在Smalltalk语言中，
+2:介绍MVC 这种模式
+3:上图这种Model-View-Controller之间的环状关系
+</code></pre>
 
-<article>
-  
+<p><img src="/images/mvc1.png"></p>
 
+<p>2） MVC Case</p>
 
-<article>
-  <h2 class="title"><a href="/blog/2015/05/05/mvc-vs-mvvm/">Mvc vs Mvvm</a></h2>
-	<div class="meta">
-		<span class="date">May  5</span>
-		<span class="tags">
+<pre><code>1：流程图介绍
+2：Massive View Controller
+3：目前的项目
+</code></pre>
 
+<p><img src="/images/mvc2.png"></p>
 
-	<a class='category' href='/blog/categories/kuang-jia/'>框架</a>
+<p>3）MVC劣势</p>
 
+<pre><code>1:Massive Controller，关联了View,Model,双向环状关系，
+  不利于后续维护，特别是多人协作时候，一个Controller文件动辄就几千行代码
 
-</span>
-	    
-	    <span class="comments"><a href="/blog/2015/05/05/mvc-vs-mvvm/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
+2:关系复杂，后续UI风格更新，在几千行代码修改什么感觉？一不留神改了model，或者controller的东西，容易产生bug
 
-</article>
+3:单元测试不方便， 改动的范围不能够控制在一个较小的范围。
 
+4:不能够复用。
+  比如iphone版本，ipad版本，不管UI这么变，业务逻辑是基本相同的，Controller与model，view这种强耦合关系不方便复用
+</code></pre>
 
+<p><img src="/images/mvc3.png"></p>
 
-<article>
-  
+<p>4）mvvm 本质</p>
 
+<pre><code>1:view 引用了View Model,单向的
+2:ViewModel 引用了Model,单向的
+</code></pre>
 
-<article>
-  <h2 class="title"><a href="/blog/2015/04/02/componentkit-zui-jia-shi-jian-%2Czhu-yi-xi-jie/">ComponentKit 最佳实践，注意细节</a></h2>
-	<div class="meta">
-		<span class="date">Apr  2</span>
-		<span class="tags">
+<p><img src="/images/mvvm1.png"></p>
 
+<p>5) mvvm 流程图讲解</p>
 
-	<a class='category' href='/blog/categories/componentkit/'>ComponentKit</a>
+<pre><code>1：MVVM模式依赖于数据绑定，它是一个框架级别的特性，用于自动连接对象属性和UI控件
+2：IOS没有数据绑定框架，可以通过ReactiveCocoa来实现数据绑定功能
+3：ReactiveCocoa开源的项目，目的就是定义一个统一的事件处理接口，这样它们可以非常简单地进行链接、过滤和组合。
+   ReactiveCocoa结合了一些编程模式：
+   函数式编程：利用高阶函数，即将函数作为其它函数的参数。
+   响应式编程：关注于数据流及变化的传播
+</code></pre>
 
+<p><img src="/images/mvvm2.png"></p>
 
-</span>
-	    
-	    <span class="comments"><a href="/blog/2015/04/02/componentkit-zui-jia-shi-jian-%2Czhu-yi-xi-jie/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
+<p>6)mvvm 优势</p>
 
-</article>
+<pre><code>1：低耦合
+   视图（View）可以独立于Model变化和修改，一个ViewModel可以绑定到不同的"View"上，当View变化的时候Model可以不变，当Model变化的时候View也可以不变。
+2：可重用性
+   对于iphoen,ipad不同版本，不同的只是UI, 视图逻辑放到ViewModel,可以达到视图逻辑重用
+3：独立开发
+   开发人员可以专注于ViewModel，model的开发，UI开发人员通过Controller,View,xib,storyboad专注页面，模块业务清晰
+4：单元测试
+   ViewModel 独立于UI很方便做单元测试，不会像MVC里面的Controle一样做测试那么别扭
+</code></pre>
 
+<p><img src="/images/mvvm3.png"></p>
 
-
-<article>
-  
-
-
-<article>
-  <h2 class="title"><a href="/blog/2015/04/02/componentkit-you-shi-yu-lie-shi/">ComponentKit 优势与劣势</a></h2>
-	<div class="meta">
-		<span class="date">Apr  2</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/componentkit/'>ComponentKit</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/2015/04/02/componentkit-you-shi-yu-lie-shi/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-</article>
-
-
-
-  
-  <h2>2014</h2>
-
-<article>
-  
-
-
-<article>
-  <h2 class="title"><a href="/blog/2014/04/13/yi-dong-duan-shi-pin-wai-gua-zi-mu-jie-jue-fang-an/">移动端视频外挂字幕解决方案</a></h2>
-	<div class="meta">
-		<span class="date">Apr 13</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/ios/'>ios</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/2014/04/13/yi-dong-duan-shi-pin-wai-gua-zi-mu-jie-jue-fang-an/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-</article>
-
-
-
-<article>
-  
-
-
-<article>
-  <h2 class="title"><a href="/blog/2014/04/13/cocos2dxzhong-wen-xian-shi/">Cocos2dx中文显示</a></h2>
-	<div class="meta">
-		<span class="date">Apr 13</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/cocos2dx/'>cocos2dx</a>
-
-
-</span>
-	    
-	    <span class="comments"><a href="/blog/2014/04/13/cocos2dxzhong-wen-xian-shi/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-
-</article>
-
+<p>7）总结：从产品项目开发的经验来看，显然mvvm比起mvc这种模式优势很明显，推荐大家引入到实际项目中去，主要是思想上</p>
 </div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2015/05/05/mvc-vs-mvvm/#disqus_thread">Comments</a></span>
+	
 </div>
 </article>
 
@@ -248,6 +191,11 @@
 
 
 
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
 
     </div>
     <footer id="footer">
@@ -274,7 +222,10 @@
       var disqus_shortname = 'davidyanggo';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.davidyanggo.me/blog/2015/05/05/mvc-vs-mvvm/';
+        var disqus_url = 'http://www.davidyanggo.me/blog/2015/05/05/mvc-vs-mvvm/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
