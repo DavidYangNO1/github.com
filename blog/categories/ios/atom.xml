@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ios | I'm DavidYang]]></title>
   <link href="http://www.davidyanggo.me/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://www.davidyanggo.me/"/>
-  <updated>2015-05-05T00:48:52+08:00</updated>
+  <updated>2015-09-09T23:09:57+08:00</updated>
   <id>http://www.davidyanggo.me/</id>
   <author>
     <name><![CDATA[David Yang]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ios9 网络问题 schema白名单]]></title>
+    <link href="http://www.davidyanggo.me/blog/2015/09/08/ios9-wang-luo-wen-ti-schema/"/>
+    <updated>2015-09-08T12:41:00+08:00</updated>
+    <id>http://www.davidyanggo.me/blog/2015/09/08/ios9-wang-luo-wen-ti-schema</id>
+    <content type="html"><![CDATA[<p>ios 9 适配两个明显的问题</p>
+
+<!--more-->
+
+
+<p>1：网络问题
+   iOS9 网络协议开始从http转换到https. 所以你的app 如果服务器不支持tls2估计很多网络模块打不开什么
+   有两中解决方案：1) 服务器升级支持https</p>
+
+<pre><code>             2) 或者在plist添加申明，不适用默认的https,转到http协议，具体做法如下
+             <img src="/images/schema.png"> 
+</code></pre>
+
+<p>2：schema 白名单问题，白名单，IOS9 需要把你要打开的schema 添加到info.plist 白名单里面去
+参考如下：
+<key>LSApplicationQueriesSchemes</key>
+<array></p>
+
+<pre><code>&lt;string&gt;twitter&lt;/string&gt;
+&lt;string&gt;whatsapp&lt;/string&gt;
+</code></pre>
+
+<p></array></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[移动端视频外挂字幕解决方案]]></title>
