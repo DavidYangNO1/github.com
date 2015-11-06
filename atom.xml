@@ -4,7 +4,7 @@
   <title><![CDATA[I'm DavidYang]]></title>
   <link href="http://www.davidyanggo.me/atom.xml" rel="self"/>
   <link href="http://www.davidyanggo.me/"/>
-  <updated>2015-09-09T23:09:57+08:00</updated>
+  <updated>2015-11-07T01:51:11+08:00</updated>
   <id>http://www.davidyanggo.me/</id>
   <author>
     <name><![CDATA[David Yang]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[android cmd install]]></title>
+    <link href="http://www.davidyanggo.me/blog/2015/11/07/android-cmd-install/"/>
+    <updated>2015-11-07T00:31:00+08:00</updated>
+    <id>http://www.davidyanggo.me/blog/2015/11/07/android-cmd-install</id>
+    <content type="html"><![CDATA[<p>android 命令行安装打包</p>
+
+<!--more-->
+
+
+<p>1: CMD  切换到Android 项目root 目录</p>
+
+<p>2：使用Gradle 编译项目，使用gradle 脚本执行assembleDebug 编译项目</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">gradlew</span>
+</span><span class='line'><span class="p">.</span><span class="o">/</span><span class="n">gradlew</span> <span class="n">assembleDebug</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+3：项目root 目录下的build 生成 {app name}.apk</p>
+
+<p>4: 安装apk 到设备</p>
+
+<p>adb install bin/{app name}.apk</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ios9 网络问题 schema白名单]]></title>
