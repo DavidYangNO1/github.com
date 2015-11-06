@@ -5,6 +5,7 @@ date: 2015-11-07 00:31
 comments: true
 categories: [Android]
 keywords: Android cmd
+sharing: true
 published: true  
 description: android 命令行安装打包
 ---
