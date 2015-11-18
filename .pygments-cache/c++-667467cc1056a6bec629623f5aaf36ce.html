@@ -1,0 +1,41 @@
+<div class="highlight"><pre><span class="k">class</span>  <span class="nc">WStrToUTF8</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+     <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">StrToUTF8</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">)</span>
+     <span class="p">{</span>
+          <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">curLocale</span><span class="o">=</span><span class="n">setlocale</span><span class="p">(</span><span class="n">LC_ALL</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
+          <span class="n">setlocale</span><span class="p">(</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+          <span class="kt">int</span> <span class="n">len</span><span class="o">=</span><span class="n">src</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+          <span class="kt">wchar_t</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span><span class="k">new</span> <span class="kt">wchar_t</span><span class="p">[</span><span class="n">len</span><span class="p">];</span>
+          <span class="kt">int</span> <span class="n">total</span><span class="o">=</span><span class="n">mbstowcs</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="n">src</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span><span class="n">len</span><span class="p">);</span>
+          <span class="n">str</span><span class="p">[</span><span class="n">total</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+          <span class="n">std</span><span class="o">::</span><span class="n">wstring</span> <span class="n">wstr</span><span class="o">=</span><span class="n">str</span><span class="p">;</span>
+          <span class="k">delete</span><span class="p">[]</span> <span class="n">str</span><span class="p">;</span>
+          <span class="n">setlocale</span><span class="p">(</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="n">curLocale</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+          <span class="k">return</span> <span class="n">WStrToUTF8</span><span class="p">(</span><span class="n">wstr</span><span class="p">);</span>
+     <span class="p">}</span>
+
+     <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">WStrToUTF8</span><span class="p">(</span> <span class="k">const</span> <span class="n">wstring</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">)</span>
+     <span class="p">{</span>
+
+          <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">dest</span><span class="p">;</span>
+          <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+               <span class="kt">wchar_t</span> <span class="n">w</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+               <span class="k">if</span> <span class="p">(</span><span class="n">w</span> <span class="o">&lt;=</span> <span class="mh">0x7f</span><span class="p">)</span>
+                    <span class="n">dest</span><span class="p">.</span><span class="n">push_back</span><span class="p">((</span><span class="kt">char</span><span class="p">)</span><span class="n">w</span><span class="p">);</span>
+               <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">w</span> <span class="o">&lt;=</span> <span class="mh">0x7ff</span><span class="p">){</span>
+                    <span class="n">dest</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mh">0xc0</span> <span class="o">|</span> <span class="p">((</span><span class="n">w</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">)</span><span class="o">&amp;</span> <span class="mh">0x1f</span><span class="p">));</span>
+                    <span class="n">dest</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mh">0x80</span><span class="o">|</span> <span class="p">(</span><span class="n">w</span> <span class="o">&amp;</span> <span class="mh">0x3f</span><span class="p">));</span>
+               <span class="p">}</span>
+               <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">w</span> <span class="o">&lt;=</span> <span class="mh">0xffff</span><span class="p">){</span>
+                    <span class="n">dest</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mh">0xe0</span> <span class="o">|</span> <span class="p">((</span><span class="n">w</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">)</span><span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">));</span>
+                    <span class="n">dest</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mh">0x80</span><span class="o">|</span> <span class="p">((</span><span class="n">w</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x3f</span><span class="p">));</span>
+                    <span class="n">dest</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mh">0x80</span><span class="o">|</span> <span class="p">(</span><span class="n">w</span> <span class="o">&amp;</span> <span class="mh">0x3f</span><span class="p">));</span>
+               <span class="p">}</span>
+               <span class="k">else</span>
+                    <span class="n">dest</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="sc">&#39;?&#39;</span><span class="p">);</span>
+          <span class="p">}</span>
+          <span class="k">return</span> <span class="n">dest</span><span class="p">;</span>
+     <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>

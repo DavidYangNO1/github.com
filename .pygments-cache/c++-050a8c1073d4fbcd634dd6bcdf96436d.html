@@ -1,0 +1,35 @@
+<div class="highlight"><pre><span class="err">@</span><span class="n">interface</span> <span class="n">VTTSettingManager</span> <span class="o">:</span> <span class="n">NSObject</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">retain</span><span class="p">)</span> <span class="n">AVPlayer</span> <span class="o">*</span> <span class="n">player</span><span class="p">;</span>
+
+<span class="o">-</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nl">initWithPlayer:</span><span class="p">(</span><span class="n">AVPlayer</span><span class="o">*</span><span class="p">)</span><span class="n">newPlayer</span><span class="p">;</span>
+
+<span class="cm">/* ! vtt 字幕设置</span>
+<span class="cm"> * @pram: entity 字幕实体类</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">setVttFontStyle:</span><span class="p">(</span><span class="n">VTTSettingEntity</span><span class="o">*</span><span class="p">)</span><span class="n">entity</span><span class="p">;</span>
+
+
+<span class="cm">/* ! 开启字幕</span>
+<span class="cm"> *   如果影片有webvtt 设置才起作用</span>
+<span class="cm"> *   返回true 有字幕,操作成功，false 影片没有字幕，操作失败</span>
+<span class="cm"> */</span>
+<span class="o">-</span><span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">enableVtt</span><span class="p">;</span>
+
+
+<span class="cm">/* ! 关闭字幕</span>
+<span class="cm"> *   如果影片有webvtt 设置才起作用</span>
+<span class="cm"> *   返回true 操作成功，false 操作失败</span>
+<span class="cm"> */</span>
+<span class="o">-</span><span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">disableVtt</span><span class="p">;</span>
+
+<span class="cm">/* ! 设置字幕语言(要设置的区域， vtt文件需要存在对于的区域语言 )</span>
+<span class="cm"> * @pram: localeIdentifier 区域 如en_US</span>
+<span class="cm"> */</span>
+<span class="o">-</span><span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nl">setVTTLanguage:</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="n">localeIdentifier</span><span class="p">;</span>
+
+<span class="err">@</span><span class="n">end</span>
+</pre></div>

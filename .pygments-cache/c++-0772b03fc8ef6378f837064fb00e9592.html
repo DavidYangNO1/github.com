@@ -1,0 +1,33 @@
+<div class="highlight"><pre><span class="cm">/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="cm"> *</span>
+<span class="cm"> * webvtt 字幕设置实体类</span>
+<span class="cm"> *</span>
+<span class="cm"> *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/</span>
+<span class="err">@</span><span class="n">interface</span> <span class="n">VTTSettingEntity</span> <span class="o">:</span> <span class="n">NSObject</span>
+
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">retain</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span> <span class="n">fontFamilyName</span><span class="p">;</span>   <span class="c1">//(不传值，默认为空) 字体家族</span>
+
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">float</span> <span class="n">relativeSize</span><span class="p">;</span>          <span class="c1">//(不传值，默认是100) 字体相对大小 如：relativeSize ==120 表示字体大小为原来的120%</span>
+
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">float</span>  <span class="n">fr</span><span class="p">;</span>  <span class="c1">//The foreground color for text,representing r  0.0-1.0</span>
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">float</span>  <span class="n">fg</span><span class="p">;</span>  <span class="c1">//The foreground color for text,representing g  0.0-1.0</span>
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">float</span>  <span class="n">fb</span><span class="p">;</span>  <span class="c1">//The foreground color for text,representing b  0.0-1.0</span>
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">float</span>  <span class="n">fa</span><span class="p">;</span>  <span class="c1">//The foreground color for text,representing a  0.0-1.0</span>
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span>  <span class="n">foregroundColorEnable</span><span class="p">;</span>    <span class="c1">// (fr,fg,fb,fa传了值，foregroundColorEnable设置为true，默认是false)foreground color enable;</span>
+
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">float</span>  <span class="n">br</span><span class="p">;</span>  <span class="c1">//The background color for text,representing r  0.0-1.0</span>
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">float</span>  <span class="n">bg</span><span class="p">;</span>  <span class="c1">//The background color for text,representing g  0.0-1.0</span>
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">float</span>  <span class="n">bb</span><span class="p">;</span>  <span class="c1">//The background color for text,representing b  0.0-1.0</span>
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="kt">float</span>  <span class="n">ba</span><span class="p">;</span>  <span class="c1">//The background color for text,representing a  0.0-1.0</span>
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span>  <span class="n">backgroundColorEnable</span><span class="p">;</span>    <span class="c1">//(br,bg,bb,ba传了值，backgroundColorEnable设置为true，默认是false) background color enable;</span>
+
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">boldStyle</span><span class="p">;</span>    <span class="c1">// (不传值，默认是false)设置粗体</span>
+
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">italicStyle</span><span class="p">;</span>  <span class="c1">// (不传值，默认是false)设置斜体</span>
+
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">underlineStyle</span><span class="p">;</span>  <span class="c1">//(不传值，默认是false)设置下划线</span>
+
+<span class="err">@</span><span class="n">property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">retain</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span> <span class="n">cssName</span><span class="p">;</span>   <span class="c1">//(不传值，默认是空)css style name;</span>
+
+<span class="err">@</span><span class="n">end</span>
+</pre></div>

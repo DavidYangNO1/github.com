@@ -1,0 +1,13 @@
+<div class="highlight"><pre><span class="cp">#EXT-X-MEDIA:TYPE=SUBTITLES 表示字幕文件标识 </span>
+<span class="n">GROUP</span><span class="o">-</span><span class="n">ID</span><span class="o">=</span><span class="s">&quot;subs&quot;</span> <span class="err">表示字幕文件与</span><span class="n">ts</span><span class="err">文件对应的标识，</span>
+<span class="n">DEFAULT</span><span class="o">=</span> <span class="n">YES</span>  <span class="err">表示视频播放默认的字幕文件</span> 
+<span class="n">LANGUAGE</span><span class="o">=</span><span class="s">&quot;eng&quot;</span> <span class="err">表示字幕语言</span><span class="p">,</span><span class="err">支持多语言字幕</span>
+<span class="n">URI</span><span class="o">=</span><span class="s">&quot;Subtitle.m3u8  字幕的路径文件名</span>
+
+
+<span class="cp">#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=263851,CODECS=&quot;mp4a.40.2, avc1.4d400d&quot;,RESOLUTION=416x234,AUDIO=&quot;bipbop_audio&quot;,SUBTITLES=&quot;subs&quot; </span>
+<span class="n">aaa</span><span class="p">.</span><span class="n">m3u8</span>  
+<span class="err">表示链接的</span><span class="n">ts</span><span class="err">文件相关属性设置</span>
+<span class="n">SUBTITLES</span><span class="o">=</span><span class="s">&quot;subs&quot;</span>  <span class="err">链接到字幕文件，建立</span><span class="n">ts</span><span class="err">文件与字幕文件标识</span>
+<span class="n">aaa</span><span class="p">.</span><span class="n">m3u8</span> <span class="err">里面都是对应的</span><span class="n">ts</span><span class="err">文件</span>
+</pre></div>

@@ -1,0 +1,23 @@
+<div class="highlight"><pre>   <span class="err">@</span><span class="n">interface</span> <span class="n">AlertDisplayComponentController</span> <span class="o">:</span> <span class="n">CKComponentController</span> <span class="o">&lt;</span><span class="n">UIAlertViewDelegate</span><span class="o">&gt;</span>
+	
+   <span class="err">@</span><span class="n">end</span>
+
+	<span class="err">@</span><span class="n">implementation</span> <span class="n">AlertDisplayComponentController</span>
+	<span class="p">{</span>
+	  <span class="n">UIAlertView</span> <span class="o">*</span><span class="n">_alertView</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">didTapDisplayAlert</span>
+
+	  <span class="n">_alertView</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="err">@</span><span class="s">&quot;Are you sure?&quot;</span>
+	                                          <span class="nl">message:</span><span class="n">nil</span>
+	                                         <span class="nl">delegate:</span><span class="n">self</span> <span class="p">...];</span>
+	  <span class="p">[</span><span class="n">_alertView</span> <span class="n">show</span><span class="p">];</span>
+	<span class="p">}</span>
+
+	<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">alertView:</span><span class="p">(</span><span class="n">UIAlertView</span> <span class="o">*</span><span class="p">)</span><span class="n">alert</span> <span class="nl">didDismissWithButtonIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">buttonIndex</span>
+	<span class="p">{</span>
+	  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">component</span> <span class="nl">updateState:</span><span class="p">...];</span>
+	<span class="p">}</span>
+	<span class="err">@</span><span class="n">end</span>
+</pre></div>

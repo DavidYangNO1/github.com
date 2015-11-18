@@ -1,0 +1,30 @@
+<div class="highlight"><pre>   <span class="o">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nl">newWithArticle:</span><span class="p">(</span><span class="n">Article</span> <span class="o">*</span><span class="p">)</span><span class="n">article</span>
+     <span class="p">{</span>
+		  <span class="n">CKComponent</span> <span class="o">*</span><span class="n">headerComponent</span><span class="p">;</span>
+		  <span class="k">if</span> <span class="p">(</span><span class="n">article</span><span class="p">.</span><span class="n">featured</span><span class="p">)</span> <span class="p">{</span>
+		    <span class="n">headerComponent</span> <span class="o">=</span> <span class="p">[</span><span class="n">FeaturedArticleHeaderComponent</span> <span class="nl">newWithArticle:</span><span class="n">article</span><span class="p">];</span>
+		  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		    <span class="n">headerComponent</span> <span class="o">=</span> <span class="p">[</span><span class="n">RegularArticleHeaderComponent</span> <span class="nl">newWithArticle:</span><span class="n">article</span><span class="p">];</span>
+		  <span class="p">}</span>
+
+		  <span class="n">UIEdgeInsets</span> <span class="n">insets</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span>
+		  <span class="n">CGFloat</span> <span class="n">imageSize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+		  <span class="k">if</span> <span class="p">(</span><span class="n">iPad</span><span class="p">)</span> <span class="p">{</span>
+		    <span class="n">insets</span> <span class="o">=</span> <span class="p">{</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">};</span>
+		    <span class="n">imageSize</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
+		  <span class="p">}</span>
+
+		  <span class="k">return</span> <span class="p">[</span><span class="n">super</span> <span class="nl">newWithComponent:</span>
+		          <span class="p">[</span><span class="n">CKStackLayoutComponent</span>
+		           <span class="nl">newWithView:</span><span class="p">{}</span>
+		           <span class="nl">size:</span><span class="p">{}</span>
+		           <span class="nl">style:</span><span class="p">{}</span>
+		           <span class="nl">children:</span><span class="p">{</span>
+		             <span class="p">{</span><span class="n">headerComponent</span><span class="p">},</span>
+		             <span class="p">{[</span><span class="n">ArticleTextComponent</span>
+		               <span class="nl">newWithArticle:</span><span class="n">article</span>
+		               <span class="nl">insets:</span><span class="n">insets</span>
+		               <span class="nl">imageSize:</span><span class="n">imageSize</span><span class="p">]},</span>
+		           <span class="p">}]]</span>
+	<span class="p">}</span>
+</pre></div>
