@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ios | I'm DavidYang]]></title>
   <link href="http://www.davidyanggo.me/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://www.davidyanggo.me/"/>
-  <updated>2015-11-21T12:08:34+08:00</updated>
+  <updated>2016-03-22T23:34:50+08:00</updated>
   <id>http://www.davidyanggo.me/</id>
   <author>
     <name><![CDATA[David Yang]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[roundCorners]]></title>
+    <link href="http://www.davidyanggo.me/blog/2016/03/22/roundcorners/"/>
+    <updated>2016-03-22T23:20:00+08:00</updated>
+    <id>http://www.davidyanggo.me/blog/2016/03/22/roundcorners</id>
+    <content type="html"><![CDATA[<p>现实世界是没有边界的，地球是园的。 iOS 里面的UIViews 也是可以弄成圆的，对一个UIView 生成圆角第一反应是修改CALayer属性</p>
+
+<!--more-->
+
+
+<p>用过设置view.layer.cornerRadius = num;</p>
+
+<p><img src="/images/round1.png"></p>
+
+<p>但是如果产品有个需求，只需要设置某个角是圆角，而不是4个角都是圆角，这么解决？
+好吧，求美术MM还不如自己搞定。ios 里面可以用过mask,结合UIBezierPath来达到目的
+具体代码如下:
+``` c++
+let cornerRadius: CGFloat = 8
+let maskLayer = CAShapeLayer()
+maskLayer.path = UIBezierPath(roundedRect:view.bounds,</p>
+
+<pre><code>                          byRoundingCourners:[.BottomLeft,.BottomRight],
+                          cornerRadii:CGSize(width:cornerRadius,height:cornerRadius)
+                        ).CGPath
+</code></pre>
+
+<p>view.layer.mask = mskLayer
+```
+<img src="/images/round2.png"></p>
+
+<p>通过byRoundingCorners 属性数组，你可以按照4个角配置其中几个圆角</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[xcode 版本管理]]></title>
