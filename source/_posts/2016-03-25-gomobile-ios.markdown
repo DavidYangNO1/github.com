@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "gomobile ios"
+title: "ios 结合 golang gomobile 产生这样的火花"
 date: 2016-03-25 02:55
 comments: true
 categories: [golang]
 keywords: gomobile ios
-description:使用gomobile 夸平台，写移动端 
+description: 使用gomobile 夸平台，写移动端 
 sharing: true
 published: true  
 ---
