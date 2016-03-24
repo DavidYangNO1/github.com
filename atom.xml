@@ -4,7 +4,7 @@
   <title><![CDATA[I'm DavidYang]]></title>
   <link href="http://www.davidyanggo.me/atom.xml" rel="self"/>
   <link href="http://www.davidyanggo.me/"/>
-  <updated>2016-03-22T23:34:50+08:00</updated>
+  <updated>2016-03-25T03:25:26+08:00</updated>
   <id>http://www.davidyanggo.me/</id>
   <author>
     <name><![CDATA[David Yang]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Gomobile Ios]]></title>
+    <link href="http://www.davidyanggo.me/blog/2016/03/25/gomobile-ios/"/>
+    <updated>2016-03-25T00:00:00+08:00</updated>
+    <id>http://www.davidyanggo.me/blog/2016/03/25/gomobile-ios</id>
+    <content type="html"><![CDATA[<p>golang 做基础服务组件来发，write once, run everwhere(主要是iOS，Android)</p>
+
+<!--more-->
+
+
+<p>gomobile 工具让你编译go 代码，在iOS 里面调用，使用gomobile,可以把golang 写的基础组件，在Android,iOS,服务端直接共享，通讯。
+下面的教程主要讲下从配置环境的iOS里面调用go package代码.</p>
+
+<h1>安装gomobile</h1>
+
+
+<p>首先：下载安装gomobile</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="mi">1</span><span class="o">:</span><span class="n">go</span> <span class="n">get</span> <span class="n">golang</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">x</span><span class="o">/</span><span class="n">mobile</span><span class="o">/</span><span class="n">cmd</span><span class="o">/</span><span class="n">gomobile</span>
+</span><span class='line'><span class="mi">2</span><span class="o">:</span><span class="n">gomobile</span> <span class="n">init</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>第1步主要是下载安装，第二步会配置安装编译器，主要是用来打包成ios，Android,底层是C++编译器，生成打包的。主要是下载下面两个包：gomobile-ndk-r10e-linux-x86_64，gomobile-ndk-r10e-darwin-x86_64。需要翻墙。</p>
+
+<h1>用go写一个基础组件，golang里面叫做Package</h1>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="n">package</span> <span class="n">example</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">func</span> <span class="n">Add</span><span class="p">(</span><span class="n">x</span> <span class="kt">int</span><span class="p">,</span> <span class="n">y</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用下面命令编译上面的go代码，生成Framework.
+gomobile bind -target ios package文件夹。</p>
+
+<p>上面会生成一个以go package命名的iOS framework</p>
+
+<h1>iOS 调用 framework</h1>
+
+
+<p>把上面生成的framework 拖到xcode 工程里面去,
+打包生成的go代码到OC这边都是C函数，以go+package+go函数名称 命名的，
+OC就可以直接调用了。</p>
+
+<h1>gomobile的遐想</h1>
+
+
+<p>gomobile 解决了前后端write run everwhere.简单说移动端的基础组件，服务，可以用golang 来写，android,iOS都可以调用。 做基础组件开发不错选择。至于是否可以用golang 来开个进程，给iOS弄个后天服务，不知道可行么，后续可以尝试下。拥抱未来吧</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[roundCorners]]></title>
