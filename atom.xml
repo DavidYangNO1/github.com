@@ -4,7 +4,7 @@
   <title><![CDATA[I'm DavidYang]]></title>
   <link href="http://www.davidyanggo.me/atom.xml" rel="self"/>
   <link href="http://www.davidyanggo.me/"/>
-  <updated>2016-03-25T03:25:26+08:00</updated>
+  <updated>2016-03-25T03:36:49+08:00</updated>
   <id>http://www.davidyanggo.me/</id>
   <author>
     <name><![CDATA[David Yang]]></name>
@@ -14,9 +14,9 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Gomobile Ios]]></title>
+    <title type="html"><![CDATA[ios 结合 golang gomobile 产生这样的火花]]></title>
     <link href="http://www.davidyanggo.me/blog/2016/03/25/gomobile-ios/"/>
-    <updated>2016-03-25T00:00:00+08:00</updated>
+    <updated>2016-03-25T02:55:00+08:00</updated>
     <id>http://www.davidyanggo.me/blog/2016/03/25/gomobile-ios</id>
     <content type="html"><![CDATA[<p>golang 做基础服务组件来发，write once, run everwhere(主要是iOS，Android)</p>
 
