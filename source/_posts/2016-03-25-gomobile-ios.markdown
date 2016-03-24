@@ -11,7 +11,7 @@ published: true
 ---
 
 
-golang 做基础服务组件来发，write once, run everwhere(主要是iOS，Android)
+golang 开发基础服务组件，write once, run everwhere(主要是iOS，Android)
 <!--more-->
 
 gomobile 工具让你编译go 代码，在iOS 里面调用，使用gomobile,可以把golang 写的基础组件，在Android,iOS,服务端直接共享，通讯。
