@@ -1,0 +1,394 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>golang + Protobuffs - I'm DavidYang</title>
+    <meta name="author" content="David Yang">
+    
+	<meta name="description" content="使用Protobuf 做通讯协议，在golang 环境下">
+	<meta name="keywords" content="binary, client, go, golang, google, JSON, protobuf, protobuffers, protobuffs, protocol buffer, server, transport">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="I'm DavidYang" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        David Yang
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/DavidYangNO1" class="github" title="Github"></a>
+  </li>
+  
+  
+  <!-- Google Plus -->
+  <li>
+  <a href="http://plus.google.com/10331822421070279899?rel=author" class="google" title="Google+"></a>
+  </li>
+  
+  
+  
+  <!-- Twitter -->
+  <li>
+  <a href="http://www.twitter.com/DavidYangNo1" class="twitter" title="Twitter"></a>
+  </li>
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">Golang + Protobuffs</h2>
+	<div class="entry-content"><p>许多APP在通讯交互格式这块，通常会选择JSON,或者 plain text, JSON应为Node.js 开发的上升尤其受欢迎。真实情况，JSON并不是很快的一种格式，所以protobuf 做为一种可选项，具体更快，更容易使用，速度比起JSON快多了。</p>
+
+<!--more-->
+
+
+<p>基于JSON与Protobu性能比较如下</p>
+
+<p><img src="/images/benchmark.png"></p>
+
+<p>下面就一步步讲解下golang 环境下这么使用protobuf</p>
+
+<p>1)环境搭建
+   1.1:mac 环境安装 protoc</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'>   <span class="n">brew</span> <span class="n">install</span> <span class="n">protoc</span>  <span class="p">(</span><span class="n">brew</span> <span class="n">mac</span> <span class="err">神器，你懂得</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>   1.2:安装protobuf 插件</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'>   <span class="n">go</span> <span class="n">get</span> <span class="o">-</span><span class="n">u</span> <span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">golang</span><span class="o">/</span><span class="n">protobuf</span><span class="o">/</span><span class="n">protoc</span><span class="o">-</span><span class="n">gen</span><span class="o">-</span><span class="n">go</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2）通讯协议文件 .proto &ndash;> NetMessage.proto</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="c1">// version</span>
+</span><span class='line'><span class="n">syntax</span> <span class="o">=</span> <span class="s">&quot;proto3&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="c1">// package of the file</span>
+</span><span class='line'><span class="n">package</span> <span class="n">main</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">message</span> <span class="n">Client</span><span class="p">{</span>
+</span><span class='line'>  <span class="n">required</span> <span class="n">int32</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">optional</span> <span class="n">string</span> <span class="n">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">optional</span> <span class="n">string</span> <span class="n">email</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">optional</span> <span class="n">string</span> <span class="n">country</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">message</span> <span class="n">Mail</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">optional</span> <span class="n">string</span> <span class="n">remoteEmail</span>  <span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">optional</span> <span class="n">string</span> <span class="n">body</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">repeated</span> <span class="n">Mail</span> <span class="n">inbox</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>   以上定义了客户端与服务端通讯的消息格式</p>
+
+<p>3）导出协议对应的go文件</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="n">protoc</span> <span class="o">--</span><span class="n">go_out</span><span class="o">=</span><span class="p">.</span> <span class="n">NetMessage</span><span class="p">.</span><span class="n">proto</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>4) 创建服务端</p>
+
+<p>   服务端主要是在POST消息体里面接收一个protobu。然后打印出打的内容，具体代码如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="n">package</span> <span class="n">main</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">import</span> <span class="p">(</span>
+</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
+</span><span class='line'>  <span class="s">&quot;github.com/golang/protobuf/proto&quot;</span>
+</span><span class='line'>  <span class="s">&quot;io/ioutil&quot;</span>
+</span><span class='line'>  <span class="s">&quot;net/http&quot;</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">http</span><span class="p">.</span><span class="n">HandleFunc</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="n">func</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="p">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="p">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">myClient</span> <span class="o">:=</span> <span class="n">Client</span><span class="p">{}</span>
+</span><span class='line'>      <span class="n">data</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">ioutil</span><span class="p">.</span><span class="n">ReadAll</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">Body</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">proto</span><span class="p">.</span><span class="n">Unmarshal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">myClient</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="n">myClient</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="s">&quot;:&quot;</span><span class="p">,</span> <span class="n">myClient</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="s">&quot;:&quot;</span><span class="p">,</span> <span class="n">myClient</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span> <span class="s">&quot;:&quot;</span><span class="p">,</span> <span class="n">myClient</span><span class="p">.</span><span class="n">Country</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">mail</span> <span class="o">:=</span> <span class="n">range</span> <span class="n">myClient</span><span class="p">.</span><span class="n">Inbox</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="n">mail</span><span class="p">.</span><span class="n">RemoteEmail</span><span class="p">,</span> <span class="s">&quot;:&quot;</span><span class="p">,</span> <span class="n">mail</span><span class="p">.</span><span class="n">Body</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'>  <span class="n">http</span><span class="p">.</span><span class="n">ListenAndServe</span><span class="p">(</span><span class="s">&quot;:3000&quot;</span><span class="p">,</span> <span class="n">nil</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>5) 创建客户端
+   客户端主要创建代码生成的client 结构体，把它的内容发送到服务器，代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="n">package</span> <span class="n">main</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">import</span> <span class="p">(</span>
+</span><span class='line'>  <span class="s">&quot;bytes&quot;</span>
+</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
+</span><span class='line'>  <span class="s">&quot;github.com/golang/protobuf/proto&quot;</span>
+</span><span class='line'>  <span class="s">&quot;net/http&quot;</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">myClient</span> <span class="o">:=</span> <span class="n">Client</span><span class="p">{</span><span class="nl">Id:</span> <span class="mi">1</span><span class="p">,</span> <span class="nl">Name:</span> <span class="s">&quot;David Yang&quot;</span><span class="p">,</span> <span class="nl">Email:</span> <span class="s">&quot;davidyanggo@gmail.com&quot;</span><span class="p">,</span> <span class="nl">Country:</span> <span class="s">&quot;CH&quot;</span><span class="p">}</span>
+</span><span class='line'>  <span class="n">clientInbox</span> <span class="o">:=</span> <span class="n">make</span><span class="p">([]</span><span class="o">*</span><span class="n">Client_Mail</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">clientInbox</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">clientInbox</span><span class="p">,</span>
+</span><span class='line'>      <span class="o">&amp;</span><span class="n">Client_Mail</span><span class="p">{</span><span class="nl">RemoteEmail:</span> <span class="s">&quot;davidyanggo1@gmail.com&quot;</span><span class="p">,</span> <span class="nl">Body:</span> <span class="s">&quot;Hello. davidyanggo1.&quot;</span><span class="p">},</span>
+</span><span class='line'>      <span class="o">&amp;</span><span class="n">Client_Mail</span><span class="p">{</span><span class="nl">RemoteEmail:</span> <span class="s">&quot;davidyanggo2@gmail.com&quot;</span><span class="p">,</span> <span class="nl">Body:</span> <span class="s">&quot;Bye, davidyanggo2.&quot;</span><span class="p">}</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'>  <span class="n">myClient</span><span class="p">.</span><span class="n">Inbox</span> <span class="o">=</span> <span class="n">clientInbox</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">data</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">proto</span><span class="p">.</span><span class="n">Marshal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">myClient</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="n">Post</span><span class="p">(</span><span class="s">&quot;http://localhost:3000&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">bytes</span><span class="p">.</span><span class="n">NewBuffer</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>总结：
+protobuf 很容易使用，提高应用程序的交互速度，推荐在项目里面使用。
+想要更深入了解参考一下文档：<a href="https://developers.google.com/protocol-buffers/docs/gotutorial">https://developers.google.com/protocol-buffers/docs/gotutorial</a></p>
+
+<p>快乐编码，活着玩命，不是玩命活着</p>
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2016/05/25/goprotobuf/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2016
+
+    David Yang
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'davidyanggo';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.davidyanggo.me/blog/2016/05/25/goprotobuf/';
+        var disqus_url = 'http://www.davidyanggo.me/blog/2016/05/25/goprotobuf/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>
