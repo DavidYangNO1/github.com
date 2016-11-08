@@ -1,0 +1,61 @@
+---
+layout: post
+title: "阿里百川IM golang API接口"
+date: 2016-11-08 16:33
+comments: true
+categories: [golang]
+keywords: 淘宝开放平台，IM，golang,api,restfull, 添加好友
+description: 淘宝开放平台，IM，golang,api 
+sharing: true
+published: true  
+---
+
+
+阿里百川IM golang API接口
+<!--more-->
+
+项目需要接阿里百川的IM，看官方文档没有golang版本的SDK，好吧只能够自己对着后台用golang 写对应的IM API，目前已经完成了添加好友，删除好友，更新好友。 在开发过程中发现阿里百川的返回格式只能够说太不严谨了，解析响应消息格式，希望他们能够好好完善吧，阿弥陀佛。
+
+<h1>封装的接口目录机构</h1>
+
+fl_const.go 主要是接口地址，appkey,appsecret的定义，根据参数获取阿里百川的沙盒。测试中发现阿里百川居然还没有实现沙箱环境，所以大家都用生产环境去测试吧。
+
+fl_post.go  主要是一个通用的网络接口，参照百川的文档对参数排序，md5加密,调用百川的接口
+
+fl_im.go  主要就是已经实现的3个业务接口，添加，更新，删除好友接口，至于百川的其它接口 可以仿照添加对应的接口调用
+
+<h1>好友添加Demo</h1>
+
+``` c++
+1：配置
+
+	func configIM() {
+		freeAliim.AppKey = freeFile.FlAppInfo.IMAppkey
+		freeAliim.AppSecret = freeFile.FlAppInfo.IMAppSecret
+		freeAliim.IsPro = freeFile.FlAppInfo.IsPro
+		freeAliim.UseHTTP = freeFile.FlAppInfo.UseHTTP
+	}
+
+2：传参数
+
+	imUserinfo := freeAliim.ImUserInfo{
+		Userid:   userid,
+		Password: pwd,
+		Name:     name,
+		IconUrl:  iconUrl,
+	}
+
+3： 调用封装的接口
+
+	succ, resposne := freeAliim.SendAddUsers(imUserinfos)
+	if succ == false {
+		
+	} else {
+		
+	}
+```
+
+<h1>总结</h1>
+
+选择小众语言就会遇上使用第三方SDK，没有对应的实现SDK，什么都要自己写，爱折腾
+快乐编码，活着玩命，不是玩命活着，爱好徒步，目前创业中
