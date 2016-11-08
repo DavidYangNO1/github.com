@@ -1,0 +1,261 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>阿里百川IM golang API接口 - I'm DavidYang</title>
+    <meta name="author" content="David Yang">
+    
+	<meta name="description" content="淘宝开放平台，IM，golang,api">
+	<meta name="keywords" content="淘宝开放平台，IM，golang,api,restfull, 添加好友">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="I'm DavidYang" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        David Yang
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/DavidYangNO1" class="github" title="Github"></a>
+  </li>
+  
+  
+  <!-- Google Plus -->
+  <li>
+  <a href="http://plus.google.com/10331822421070279899?rel=author" class="google" title="Google+"></a>
+  </li>
+  
+  
+  
+  <!-- Twitter -->
+  <li>
+  <a href="http://www.twitter.com/DavidYangNo1" class="twitter" title="Twitter"></a>
+  </li>
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">阿里百川IM Golang API接口</h2>
+	<div class="entry-content"><p>阿里百川IM golang API接口</p>
+
+<!--more-->
+
+
+<p>项目需要接阿里百川的IM，看官方文档没有golang版本的SDK，好吧只能够自己对着后台用golang 写对应的IM API，目前已经完成了添加好友，删除好友，更新好友。 在开发过程中发现阿里百川的返回格式只能够说太不严谨了，解析响应消息格式，希望他们能够好好完善吧，阿弥陀佛。</p>
+
+<h1>封装的接口目录机构</h1>
+
+
+<p>fl_const.go 主要是接口地址，appkey,appsecret的定义，根据参数获取阿里百川的沙盒。测试中发现阿里百川居然还没有实现沙箱环境，所以大家都用生产环境去测试吧。</p>
+
+<p>fl_post.go  主要是一个通用的网络接口，参照百川的文档对参数排序，md5加密,调用百川的接口</p>
+
+<p>fl_im.go  主要就是已经实现的3个业务接口，添加，更新，删除好友接口，至于百川的其它接口 可以仿照添加对应的接口调用</p>
+
+<h1>好友添加Demo</h1>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="mi">1</span><span class="err">：配置</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">func</span> <span class="n">configIM</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">freeAliim</span><span class="p">.</span><span class="n">AppKey</span> <span class="o">=</span> <span class="n">freeFile</span><span class="p">.</span><span class="n">FlAppInfo</span><span class="p">.</span><span class="n">IMAppkey</span>
+</span><span class='line'>      <span class="n">freeAliim</span><span class="p">.</span><span class="n">AppSecret</span> <span class="o">=</span> <span class="n">freeFile</span><span class="p">.</span><span class="n">FlAppInfo</span><span class="p">.</span><span class="n">IMAppSecret</span>
+</span><span class='line'>      <span class="n">freeAliim</span><span class="p">.</span><span class="n">IsPro</span> <span class="o">=</span> <span class="n">freeFile</span><span class="p">.</span><span class="n">FlAppInfo</span><span class="p">.</span><span class="n">IsPro</span>
+</span><span class='line'>      <span class="n">freeAliim</span><span class="p">.</span><span class="n">UseHTTP</span> <span class="o">=</span> <span class="n">freeFile</span><span class="p">.</span><span class="n">FlAppInfo</span><span class="p">.</span><span class="n">UseHTTP</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">2</span><span class="err">：传参数</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">imUserinfo</span> <span class="o">:=</span> <span class="n">freeAliim</span><span class="p">.</span><span class="n">ImUserInfo</span><span class="p">{</span>
+</span><span class='line'>      <span class="nl">Userid:</span>   <span class="n">userid</span><span class="p">,</span>
+</span><span class='line'>      <span class="nl">Password:</span> <span class="n">pwd</span><span class="p">,</span>
+</span><span class='line'>      <span class="nl">Name:</span>     <span class="n">name</span><span class="p">,</span>
+</span><span class='line'>      <span class="nl">IconUrl:</span>  <span class="n">iconUrl</span><span class="p">,</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">3</span><span class="err">：</span> <span class="err">调用封装的接口</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">succ</span><span class="p">,</span> <span class="n">resposne</span> <span class="o">:=</span> <span class="n">freeAliim</span><span class="p">.</span><span class="n">SendAddUsers</span><span class="p">(</span><span class="n">imUserinfos</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">succ</span> <span class="o">==</span> <span class="kc">false</span> <span class="p">{</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h1>总结</h1>
+
+
+<p>选择小众语言就会遇上使用第三方SDK，没有对应的实现SDK，什么都要自己写，爱折腾
+快乐编码，活着玩命，不是玩命活着，爱好徒步，目前创业中</p>
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2016/11/08/openim/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2016
+
+    David Yang
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'davidyanggo';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.davidyanggo.me/blog/2016/11/08/openim/';
+        var disqus_url = 'http://www.davidyanggo.me/blog/2016/11/08/openim/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

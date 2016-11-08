@@ -4,7 +4,7 @@
   <title><![CDATA[I'm DavidYang]]></title>
   <link href="http://www.davidyanggo.me/atom.xml" rel="self"/>
   <link href="http://www.davidyanggo.me/"/>
-  <updated>2016-05-25T01:58:27+08:00</updated>
+  <updated>2016-11-08T17:05:32+08:00</updated>
   <id>http://www.davidyanggo.me/</id>
   <author>
     <name><![CDATA[David Yang]]></name>
@@ -12,6 +12,97 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[阿里百川IM golang API接口]]></title>
+    <link href="http://www.davidyanggo.me/blog/2016/11/08/openim/"/>
+    <updated>2016-11-08T16:33:00+08:00</updated>
+    <id>http://www.davidyanggo.me/blog/2016/11/08/openim</id>
+    <content type="html"><![CDATA[<p>阿里百川IM golang API接口</p>
+
+<!--more-->
+
+
+<p>项目需要接阿里百川的IM，看官方文档没有golang版本的SDK，好吧只能够自己对着后台用golang 写对应的IM API，目前已经完成了添加好友，删除好友，更新好友。 在开发过程中发现阿里百川的返回格式只能够说太不严谨了，解析响应消息格式，希望他们能够好好完善吧，阿弥陀佛。</p>
+
+<h1>封装的接口目录机构</h1>
+
+
+<p>fl_const.go 主要是接口地址，appkey,appsecret的定义，根据参数获取阿里百川的沙盒。测试中发现阿里百川居然还没有实现沙箱环境，所以大家都用生产环境去测试吧。</p>
+
+<p>fl_post.go  主要是一个通用的网络接口，参照百川的文档对参数排序，md5加密,调用百川的接口</p>
+
+<p>fl_im.go  主要就是已经实现的3个业务接口，添加，更新，删除好友接口，至于百川的其它接口 可以仿照添加对应的接口调用</p>
+
+<h1>好友添加Demo</h1>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="mi">1</span><span class="err">：配置</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">func</span> <span class="n">configIM</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">freeAliim</span><span class="p">.</span><span class="n">AppKey</span> <span class="o">=</span> <span class="n">freeFile</span><span class="p">.</span><span class="n">FlAppInfo</span><span class="p">.</span><span class="n">IMAppkey</span>
+</span><span class='line'>      <span class="n">freeAliim</span><span class="p">.</span><span class="n">AppSecret</span> <span class="o">=</span> <span class="n">freeFile</span><span class="p">.</span><span class="n">FlAppInfo</span><span class="p">.</span><span class="n">IMAppSecret</span>
+</span><span class='line'>      <span class="n">freeAliim</span><span class="p">.</span><span class="n">IsPro</span> <span class="o">=</span> <span class="n">freeFile</span><span class="p">.</span><span class="n">FlAppInfo</span><span class="p">.</span><span class="n">IsPro</span>
+</span><span class='line'>      <span class="n">freeAliim</span><span class="p">.</span><span class="n">UseHTTP</span> <span class="o">=</span> <span class="n">freeFile</span><span class="p">.</span><span class="n">FlAppInfo</span><span class="p">.</span><span class="n">UseHTTP</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">2</span><span class="err">：传参数</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">imUserinfo</span> <span class="o">:=</span> <span class="n">freeAliim</span><span class="p">.</span><span class="n">ImUserInfo</span><span class="p">{</span>
+</span><span class='line'>      <span class="nl">Userid:</span>   <span class="n">userid</span><span class="p">,</span>
+</span><span class='line'>      <span class="nl">Password:</span> <span class="n">pwd</span><span class="p">,</span>
+</span><span class='line'>      <span class="nl">Name:</span>     <span class="n">name</span><span class="p">,</span>
+</span><span class='line'>      <span class="nl">IconUrl:</span>  <span class="n">iconUrl</span><span class="p">,</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">3</span><span class="err">：</span> <span class="err">调用封装的接口</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">succ</span><span class="p">,</span> <span class="n">resposne</span> <span class="o">:=</span> <span class="n">freeAliim</span><span class="p">.</span><span class="n">SendAddUsers</span><span class="p">(</span><span class="n">imUserinfos</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">succ</span> <span class="o">==</span> <span class="kc">false</span> <span class="p">{</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h1>总结</h1>
+
+
+<p>选择小众语言就会遇上使用第三方SDK，没有对应的实现SDK，什么都要自己写，爱折腾
+快乐编码，活着玩命，不是玩命活着，爱好徒步，目前创业中</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[golang + Protobuffs]]></title>
