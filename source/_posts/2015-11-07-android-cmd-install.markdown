@@ -6,7 +6,7 @@ comments: true
 categories: [Android]
 keywords: Android cmd
 sharing: true
-published: true  
+published: false  
 description: android 命令行安装打包
 ---
 
